@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Discover Sri Lanka - The Pearl of the Indian Ocean. Explore pristine beaches, ancient temples, wildlife safaris, and scenic train journeys.">
+  <meta name="keywords" content="Sri Lanka, Travel, Tourism, Beaches, Sigiriya, Ella, Wildlife, Tea Plantations">
+  <title>C & K Tours | The Pearl of the Indian Ocean</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-loader.css">
+</head>
+
+<body>
+
+  <!-- ==========================================
+       LOADER
+       ========================================== -->
+  <div id="loader" class="loader-container">
+    <div class="loader-scene">
+      <div class="van-wrapper">
+        <div class="van-body">
+          <div class="van-roof"></div>
+          <div class="van-window-front"></div>
+          <div class="van-window-rear"></div>
+          <div class="van-stripe"></div>
+          <div class="van-door-handle"></div>
+          <div class="van-light-front"></div>
+          <div class="van-light-rear"></div>
+        </div>
+        <div class="van-wheel van-wheel-front">
+          <div class="van-wheel-rim"></div>
+        </div>
+        <div class="van-wheel van-wheel-rear">
+          <div class="van-wheel-rim"></div>
+        </div>
+      </div>
+      <div class="road">
+        <div class="road-line"></div>
+      </div>
+      <div class="loading-text">Starting Engine...</div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       NAVBAR
+       ========================================== -->
+  <nav id="navbar" class="navbar">
+    <div class="container navbar-inner">
+      <!-- Logo -->
+      <a href="#" class="logo">
+        <span class="logo-text">C & K Tours</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="nav-links">
+        <a href="#destinations" class="nav-link">Destinations</a>
+        <a href="#experiences" class="nav-link">Things to Do</a>
+        <a href="#stories" class="nav-link">Plan Your Trip</a>
+        <a href="#" class="nav-link">Events</a>
+        <a href="#stories" class="nav-link">Stories</a>
+        <button class="nav-search" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Toggle -->
+      <button id="mobile-toggle" class="mobile-toggle" aria-label="Toggle Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" x2="20" y1="12" y2="12" />
+          <line x1="4" x2="20" y1="6" y2="6" />
+          <line x1="4" x2="20" y1="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+      <a href="#destinations">Destinations</a>
+      <a href="#experiences">Things to Do</a>
+      <a href="#stories">Plan Your Trip</a>
+      <a href="#">Events</a>
+      <a href="#stories">Stories</a>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       HERO SECTION
+       ========================================== -->
+  <section class="hero">
+    <!-- Background -->
+    <div class="hero-bg">
+      <img src="Images/hero.jpg" alt="C & K Tours - Sri Lanka">
+      <div class="hero-overlay"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="hero-content">
+      <span class="hero-badge">Welcome to paradise</span>
+      <h1 class="hero-title">So Sri Lanka</h1>
+      <p class="hero-desc">
+        Discover an island of golden beaches, rising waves, misty mountains, mighty elephants, stealthy leopards, giant
+        whales, and a majestic past.
+      </p>
+      <div class="hero-buttons">
+        <a href="#destinations" class="btn-primary">Explore Destinations</a>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       INTRO SECTION
+       ========================================== -->
+  <section class="intro-section container">
+    <span class="intro-badge">Why Sri Lanka?</span>
+    <h2 class="intro-title">
+      Endless beaches, timeless ruins, welcoming people, oodles of elephants, rolling surf, cheap prices, fun trains,
+      famous tea and flavourful food.
+    </h2>
+    <div class="intro-line"></div>
+  </section>
+
+  <!-- ==========================================
+       DESTINATIONS SECTION
+       ========================================== -->
+  <section id="destinations" class="destinations-section container">
+    <div class="section-header">
+      <div>
+        <h3 class="section-title">Top Destinations</h3>
+        <p class="section-subtitle">Explore the most visited places in the island</p>
+      </div>
+      <a href="#" class="section-link">View All Places</a>
+    </div>
+
+    <div id="destinations-grid" class="destinations-grid">
+      <!-- Destination cards will be rendered by JavaScript -->
+    </div>
+
+    <div class="mobile-view-all">
+      <a href="#">View All Places</a>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       EXPERIENCES SECTION
+       ========================================== -->
+  <section id="experiences" class="experiences-section">
+    <div class="container">
+      <div class="experiences-header">
+        <span class="experiences-badge">Things to Do</span>
+        <h2 class="experiences-title">Curated Experiences</h2>
+        <p class="experiences-desc">
+          Whether you are an adrenaline junkie, a history buff, or someone looking for serenity,
+          Sri Lanka offers a kaleidoscope of experiences tailored just for you.
+        </p>
+      </div>
+
+      <div class="experiences-grid">
+        <!-- Wildlife Safaris -->
+        <div class="experience-card">
+          <div class="experience-icon emerald">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+              <circle cx="12" cy="13" r="3" />
+            </svg>
+          </div>
+          <h3 class="experience-title">Wildlife Safaris</h3>
+          <p class="experience-desc">Spot leopards in Yala or witness the gathering of elephants in Minneriya.</p>
+          <a href="#" class="experience-link">Learn more</a>
+        </div>
+
+        <!-- Ceylon Tea Trails -->
+        <div class="experience-card">
+          <div class="experience-icon amber">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 2v2" />
+              <path d="M14 2v2" />
+              <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" />
+              <path d="M6 2v2" />
+            </svg>
+          </div>
+          <h3 class="experience-title">Ceylon Tea Trails</h3>
+          <p class="experience-desc">Walk through lush green plantations and taste the world's finest tea.</p>
+          <a href="#" class="experience-link">Learn more</a>
+        </div>
+
+        <!-- Pristine Beaches -->
+        <div class="experience-card">
+          <div class="experience-icon blue">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+              <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+              <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+            </svg>
+          </div>
+          <h3 class="experience-title">Pristine Beaches</h3>
+          <p class="experience-desc">Surf in Arugam Bay or relax on the golden sands of Mirissa.</p>
+          <a href="#" class="experience-link">Learn more</a>
+        </div>
+
+        <!-- Hill Country -->
+        <div class="experience-card">
+          <div class="experience-icon stone">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+              <path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19" />
+            </svg>
+          </div>
+          <h3 class="experience-title">Hill Country</h3>
+          <p class="experience-desc">Ride the iconic blue train to Ella and hike through misty peaks.</p>
+          <a href="#" class="experience-link">Learn more</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       BANNER SECTION
+       ========================================== -->
+  <section class="banner-section">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+      <h2 class="banner-title">The Essence of Serendipity</h2>
+      <p class="banner-desc">
+        Sri Lanka is one of the few places in the world where you can see the world's largest land mammal and the
+        world's largest marine mammal in a single day.
+      </p>
+      <a href="#" class="btn-banner">Plan Your Journey</a>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       STORIES SECTION
+       ========================================== -->
+  <section id="stories" class="stories-section container">
+    <div class="stories-header">
+      <span class="stories-badge">Travel Journal</span>
+      <h2 class="stories-title">Stories from the Island</h2>
+    </div>
+
+    <div class="stories-grid">
+      <!-- Story 1 -->
+      <article class="story-card">
+        <div class="story-card-image">
+          <img
+            src="https://images.unsplash.com/photo-1625938145744-e38051524e2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            alt="Sri Lankan Rice and Curry" referrerpolicy="no-referrer">
+        </div>
+        <div class="story-card-meta">
+          <span class="story-card-category">Food & Drink</span>
+          <span>•</span>
+          <span>5 Min Read</span>
+        </div>
+        <h3 class="story-card-title">A Guide to Sri Lankan Street Food</h3>
+        <p class="story-card-desc">
+          From spicy Kottu Roti to sweet Hoppers, discover the explosion of flavors that defines Sri Lankan cuisine.
+        </p>
+      </article>
+
+      <!-- Story 2 -->
+      <article class="story-card">
+        <div class="story-card-image">
+          <img
+            src="https://images.unsplash.com/photo-1568461875185-1b0333334e32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            alt="Sri Lankan Culture and Festivals" referrerpolicy="no-referrer">
+        </div>
+        <div class="story-card-meta">
+          <span class="story-card-category">Culture</span>
+          <span>•</span>
+          <span>7 Min Read</span>
+        </div>
+        <h3 class="story-card-title">The Esala Perahera Festival</h3>
+        <p class="story-card-desc">
+          Witness the grandeur of Kandy's annual procession featuring traditional dancers, drummers, and decorated
+          elephants.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <h2>C & K Tours</h2>
+          <p>
+            Your trusted travel partner for exploring the paradise island of Sri Lanka. Discover our heritage, embrace
+            our culture, and enjoy unforgettable adventures.
+          </p>
+          <div class="footer-socials">
+            <a href="#" class="footer-social-link" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="Twitter">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+              </svg>
+            </a>
+            <a href="#" class="footer-social-link" aria-label="YouTube">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+                <path d="m10 15 5-3-5-3z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Explore Links -->
+        <div class="footer-column">
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="#destinations">Destinations</a></li>
+            <li><a href="#experiences">Experiences</a></li>
+            <li><a href="#">Festivals</a></li>
+            <li><a href="#">Map</a></li>
+            <li><a href="#">Visa Information</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="footer-column">
+          <h3>Contact</h3>
+          <ul>
+            <li class="footer-contact-item">
+              <span class="footer-contact-label">A:</span>
+              <span>80 Galle Road, Colombo 03,<br>Sri Lanka</span>
+            </li>
+            <li class="footer-contact-item">
+              <span class="footer-contact-label">E:</span>
+              <a href="mailto:hello@lovesrilanka.org">hello@lovesrilanka.org</a>
+            </li>
+            <li class="footer-contact-item">
+              <span class="footer-contact-label">T:</span>
+              <span>+94 11 234 5678</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="footer-column">
+          <h3>Newsletter</h3>
+          <p class="footer-newsletter">Subscribe to get the latest updates and offers.</p>
+          <form class="footer-newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+            <input type="email" placeholder="Your email address" class="footer-newsletter-input" required>
+            <button type="submit" class="footer-newsletter-btn">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>&copy; <span id="copyright-year">2024</span> C & K Tours. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       CHAT ASSISTANT
+       ========================================== -->
+  <!-- Toggle Button -->
+  <button id="chat-toggle" class="chat-toggle" aria-label="Open AI Chat">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path
+        d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+      <path d="M20 3v4" />
+      <path d="M22 5h-4" />
+      <path d="M4 17v2" />
+      <path d="M5 18H3" />
+    </svg>
+    <span>Ask AI Guide</span>
+  </button>
+
+  <!-- Chat Window -->
+  <div id="chat-window" class="chat-window">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+            <path d="M20 3v4" />
+            <path d="M22 5h-4" />
+            <path d="M4 17v2" />
+            <path d="M5 18H3" />
+          </svg>
+        </div>
+        <div class="chat-header-text">
+          <h3>C & K Tours Guide</h3>
+          <p>Your Travel Assistant</p>
+        </div>
+      </div>
+      <button id="chat-close" class="chat-close" aria-label="Close Chat">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Messages -->
+    <div id="chat-messages" class="chat-messages">
+      <!-- Messages will be rendered by JavaScript -->
+    </div>
+
+    <!-- Input -->
+    <div class="chat-input-area">
+      <div class="chat-input-wrapper">
+        <input type="text" id="chat-input" class="chat-input" placeholder="Ask about Sigiriya, visas, weather...">
+        <button id="chat-send" class="chat-send" aria-label="Send Message">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" />
+            <path d="m21.854 2.147-10.94 10.939" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+
+</html>
