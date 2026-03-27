@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
         className={`fixed w-full z-50 transition-all duration-300 ${
           isLightMode
             ? 'bg-white/80 backdrop-blur-lg text-slate-900 shadow-lg py-3 border-b border-white/20'
-            : 'bg-white/10 backdrop-blur-md text-white py-4 border-b border-white/15'
+            : 'bg-transparent backdrop-blur-0 text-white py-4 border-b border-transparent shadow-none'
         }`}
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
