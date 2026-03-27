@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { getApiUrl } from '../services/api';
+import { addStoredReview, getStoredReviews } from '../services/reviewStore';
 
 interface Review {
   id: number;
@@ -77,16 +77,11 @@ const Reviews: React.FC = () => {
     setError(null);
 
     try {
-      const response = await fetch(getApiUrl('/reviews'));
-      if (!response.ok) {
-        throw new Error('Could not load reviews');
-      }
-
-      const data = (await response.json()) as Review[];
+      const data = getStoredReviews() as Review[];
       setReviews(data);
     } catch (loadError) {
       console.error(loadError);
-      setError('Unable to load reviews. Please make sure the API server is running.');
+      setError('Unable to load reviews right now. Please refresh and try again.');
     } finally {
       setLoading(false);
     }
@@ -140,27 +135,14 @@ const Reviews: React.FC = () => {
     setSuccessMessage(null);
 
     try {
-      const response = await fetch(getApiUrl('/reviews'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          tourId,
-          tourName: selectedTourName,
-          customerName: cleanName,
-          rating,
-          comment: cleanComment,
-          visitedAt: visitedAt || null,
-        }),
+      const newReview = addStoredReview({
+        tourId,
+        tourName: selectedTourName,
+        customerName: cleanName,
+        rating,
+        comment: cleanComment,
+        visitedAt: visitedAt || null,
       });
-
-      if (!response.ok) {
-        const data = (await response.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(data?.error || 'Could not add review');
-      }
-
-      const newReview = (await response.json()) as Review;
       setReviews((current) => [newReview, ...current]);
 
       setCustomerName('');

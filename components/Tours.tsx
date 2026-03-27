@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaMapMarkerAlt, FaClock, FaUsers, FaCar, FaChevronRight, FaTimes, FaCalendarAlt, FaCheckCircle, FaPhone, FaMagic, FaTree, FaShuttleVan, FaBus } from 'react-icons/fa';
-import { getApiUrl } from '../services/api';
+import { getStoredReviews } from '../services/reviewStore';
 
 // Tour Places Data
 const TOUR_PLACES = [
@@ -527,30 +527,21 @@ const Tours: React.FC = () => {
   const [reviewsByTour, setReviewsByTour] = useState<Record<string, ReviewPreview[]>>({});
 
   useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await fetch(getApiUrl('/reviews'));
-        if (!response.ok) {
-          return;
+    try {
+      const reviews = getStoredReviews() as ReviewPreview[];
+      const grouped = reviews.reduce<Record<string, ReviewPreview[]>>((accumulator, review) => {
+        if (!accumulator[review.tourId]) {
+          accumulator[review.tourId] = [];
         }
 
-        const reviews = (await response.json()) as ReviewPreview[];
-        const grouped = reviews.reduce<Record<string, ReviewPreview[]>>((accumulator, review) => {
-          if (!accumulator[review.tourId]) {
-            accumulator[review.tourId] = [];
-          }
+        accumulator[review.tourId].push(review);
+        return accumulator;
+      }, {});
 
-          accumulator[review.tourId].push(review);
-          return accumulator;
-        }, {});
-
-        setReviewsByTour(grouped);
-      } catch (error) {
-        console.error('Failed to load review previews:', error);
-      }
-    };
-
-    fetchReviews();
+      setReviewsByTour(grouped);
+    } catch (error) {
+      console.error('Failed to load review previews:', error);
+    }
   }, []);
 
   return (
