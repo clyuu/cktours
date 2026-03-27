@@ -28,7 +28,6 @@ const Navbar: React.FC = () => {
     { name: 'Plan Your Trip', href: '/tours', isRoute: true },
     { name: 'Reviews', href: '/reviews', isRoute: true },
     { name: 'Events', href: '/events', isRoute: true },
-    { name: 'Stories', href: '#', isRoute: false },
   ];
 
   const handleSearch = (e: React.FormEvent) => {
