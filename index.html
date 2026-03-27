@@ -5,6 +5,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>C&K Tours | Your Trusted Travel Partner in Sri Lanka</title>
+  <script>
+    // GitHub Pages SPA redirect recovery.
+    (function (location) {
+      if (location.search && location.search.startsWith('?/')) {
+        const route = location.search
+          .slice(2)
+          .replace(/~and~/g, '&');
+        const cleanPath = route ? `/${route}` : '/';
+        window.history.replaceState(null, '', cleanPath + location.hash);
+      }
+    })(window.location);
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
