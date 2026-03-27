@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes, FaSearch } from 'react-icons/fa';
 
 const Navbar: React.FC = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
   const isHomePage = location.pathname === '/' || location.pathname === '';
+  const useTransparentStart = isHomePage;
+  const isLightMode = !useTransparentStart || isScrolled;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [location.pathname]);
 
   const navLinks = [
     { name: 'Destinations', href: '#destinations', isRoute: false },
@@ -39,12 +52,16 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav
-        className="fixed w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-lg text-slate-900 shadow-lg py-3 border-b border-white/20"
+        className={`fixed w-full z-50 transition-all duration-300 ${
+          isLightMode
+            ? 'bg-white/80 backdrop-blur-lg text-slate-900 shadow-lg py-3 border-b border-white/20'
+            : 'bg-white/10 backdrop-blur-md text-white py-4 border-b border-white/15'
+        }`}
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 z-50">
-            <span className="text-2xl font-serif font-bold tracking-tight text-lanka-green">
+            <span className={`text-2xl font-serif font-bold tracking-tight ${isLightMode ? 'text-lanka-green' : 'text-white drop-shadow-lg'}`}>
               C&K Tours
             </span>
           </Link>
@@ -56,7 +73,9 @@ const Navbar: React.FC = () => {
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="font-medium text-sm uppercase tracking-wider hover:text-lanka-gold transition-colors text-slate-700"
+                  className={`font-medium text-sm uppercase tracking-wider hover:text-lanka-gold transition-colors ${
+                    isLightMode ? 'text-slate-700' : 'text-white/95 drop-shadow'
+                  }`}
                 >
                   {link.name}
                 </Link>
@@ -64,7 +83,9 @@ const Navbar: React.FC = () => {
                 <a
                   key={link.name}
                   href={isHomePage ? link.href : `/${link.href}`}
-                  className="font-medium text-sm uppercase tracking-wider hover:text-lanka-gold transition-colors text-slate-700"
+                  className={`font-medium text-sm uppercase tracking-wider hover:text-lanka-gold transition-colors ${
+                    isLightMode ? 'text-slate-700' : 'text-white/95 drop-shadow'
+                  }`}
                 >
                   {link.name}
                 </a>
@@ -72,7 +93,11 @@ const Navbar: React.FC = () => {
             ))}
             <button 
               onClick={() => setIsSearchOpen(true)}
-              className="p-2 rounded-full transition-all duration-300 hover:bg-lanka-green/10 text-slate-700 hover:text-lanka-green"
+              className={`p-2 rounded-full transition-all duration-300 ${
+                isLightMode
+                  ? 'hover:bg-lanka-green/10 text-slate-700 hover:text-lanka-green'
+                  : 'hover:bg-white/20 text-white'
+              }`}
             >
               <FaSearch className="w-5 h-5" />
             </button>
@@ -84,9 +109,9 @@ const Navbar: React.FC = () => {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
-              <FaTimes className="w-7 h-7 text-slate-900" />
+              <FaTimes className={`w-7 h-7 ${isLightMode ? 'text-slate-900' : 'text-white'}`} />
             ) : (
-              <FaBars className="w-7 h-7 text-slate-900" />
+              <FaBars className={`w-7 h-7 ${isLightMode ? 'text-slate-900' : 'text-white'}`} />
             )}
           </button>
 
