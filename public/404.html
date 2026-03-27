@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages SPA fallback: redirect unknown paths to index with encoded route.
+      (function () {
+        var path = window.location.pathname.replace(/^\//, '');
+        var query = window.location.search ? window.location.search.slice(1) : '';
+        var encoded = path + (query ? '&' + query : '');
+        var safeEncoded = encoded.replace(/&/g, '~and~');
+        var target = '/?/' + safeEncoded + window.location.hash;
+        window.location.replace(target);
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>
