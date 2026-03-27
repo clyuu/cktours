@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
+import { FaChevronDown } from 'react-icons/fa';
 
 const Hero: React.FC = () => {
   return (
@@ -15,27 +15,27 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto mt-16">
-        <span className="block text-lanka-gold font-medium tracking-[0.2em] mb-4 uppercase text-sm md:text-base animate-fade-in-up">
+      <div className="relative z-10 text-center text-white px-4 sm:px-6 max-w-4xl mx-auto">
+        <span className="block text-lanka-gold font-medium tracking-[0.15em] sm:tracking-[0.2em] mb-3 sm:mb-4 uppercase text-xs sm:text-sm md:text-base animate-fade-in-up">
           Welcome to paradise
         </span>
-        <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight drop-shadow-lg">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 sm:mb-6 leading-tight drop-shadow-lg">
           So Sri Lanka
         </h1>
-        <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+        <p className="text-sm sm:text-lg md:text-xl text-white/90 mb-6 sm:mb-10 max-w-2xl mx-auto font-light leading-relaxed px-2">
           Discover an island of golden beaches, rising waves, misty mountains, mighty elephants, stealthy leopards, giant whales, and a majestic past.
         </p>
         
         <div className="flex justify-center">
-            <button className="px-6 py-3 bg-lanka-gold text-lanka-green font-bold text-xs uppercase tracking-widest hover:bg-white transition-colors duration-300 rounded-full">
+            <a href="#destinations" className="px-5 sm:px-6 py-2.5 sm:py-3 bg-lanka-gold text-lanka-green font-bold text-[11px] sm:text-xs uppercase tracking-widest hover:bg-white transition-colors duration-300 rounded-full">
             Explore Destinations
-            </button>
+            </a>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/70">
-        <ChevronDown size={32} />
+      <div className="absolute bottom-8 sm:bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/70">
+        <FaChevronDown className="w-6 h-6 sm:w-8 sm:h-8" />
       </div>
     </section>
   );

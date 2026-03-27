@@ -7,6 +7,7 @@ export interface Destination {
   description: string;
   imageUrl: string;
   category: string;
+  tourPackage?: string;
 }
 
 export interface Experience {

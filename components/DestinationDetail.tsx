@@ -1,10 +1,11 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, MapPin, Calendar, Clock, Users } from 'lucide-react';
-import { DESTINATIONS } from '../constants';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { FaArrowLeft, FaMapMarkerAlt, FaCalendarAlt, FaClock, FaUsers, FaBoxOpen } from 'react-icons/fa';
+import { DESTINATIONS, TOUR_PACKAGE_NAMES } from '../constants';
 
 const DestinationDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const destination = DESTINATIONS.find(d => d.id === id);
 
   if (!destination) {
@@ -20,73 +21,141 @@ const DestinationDetail: React.FC = () => {
     );
   }
 
+  const tourPackageName = destination.tourPackage ? TOUR_PACKAGE_NAMES[destination.tourPackage] : null;
+
+  const handleBookTour = () => {
+    navigate('/tours', { state: { selectedPackage: destination.tourPackage } });
+  };
+
   // Extended content for each destination
   const destinationContent: Record<string, { highlights: string[], bestTime: string, duration: string, groupSize: string, fullDescription: string }> = {
-    '1': {
-      highlights: ['Climb the ancient rock fortress', 'View stunning frescoes of the Sigiriya Maidens', 'Explore the water gardens', 'Watch sunset from the top'],
-      bestTime: 'January - April',
-      duration: 'Half day',
-      groupSize: '2-15 people',
-      fullDescription: `Sigiriya, also known as Lion Rock, is an ancient rock fortress located in the northern Matale District near the town of Dambulla in the Central Province, Sri Lanka. It is a site of historical and archaeological significance that is dominated by a massive column of granite approximately 180 meters high.
+    'ravana-falls': {
+      highlights: ['View the stunning 25m waterfall', 'Enjoy the misty atmosphere', 'Take photos at the scenic viewpoint', 'Explore the surrounding forest'],
+      bestTime: 'Year-round',
+      duration: '1-2 hours',
+      groupSize: 'Any size',
+      fullDescription: `Ravana Falls is one of the most popular waterfalls in Sri Lanka, located on the Ella-Wellawaya road. The waterfall is named after the legendary King Ravana from the epic Ramayana.
 
-According to ancient Sri Lankan chronicles, this site was selected by King Kashyapa (477–495 CE) for his new capital. He built his palace on the top of this rock and decorated its sides with colorful frescoes. On a small plateau about halfway up the side of this rock, he built a gateway in the form of an enormous lion.
+Standing at approximately 25 meters tall, the waterfall cascades down in a beautiful display, especially during the monsoon season when water levels are at their peak. The surrounding area is lush with tropical vegetation, creating a picturesque setting.
 
-The capital and the royal palace were abandoned after the king's death. It was used as a Buddhist monastery until the 14th century. Today, Sigiriya is a UNESCO World Heritage Site and is one of the best-preserved examples of ancient urban planning.`
+The falls are easily accessible from the main road, making it a popular stop for tourists traveling through the Ella region. The misty spray from the waterfall provides a refreshing experience, especially on hot days.`
     },
-    '2': {
+    'nine-arch-bridge': {
       highlights: ['Watch trains cross the iconic bridge', 'Photography opportunities', 'Scenic hiking trails nearby', 'Visit nearby Ella town'],
       bestTime: 'Year-round',
       duration: '2-3 hours',
       groupSize: 'Any size',
-      fullDescription: `The Nine Arch Bridge, also called the Bridge in the Sky, is a viaduct bridge in Sri Lanka. It is one of the best examples of colonial-era railway construction in the country. Located in Demodara, between Ella and Demodara railway stations on the Badulla railway line, the bridge is 91 meters long and 24 meters high.
+      fullDescription: `The Nine Arch Bridge, also called the Bridge in the Sky, is a viaduct bridge in Sri Lanka. It is one of the best examples of colonial-era railway construction in the country. Located in Demodara, between Ella and Demodara railway stations on the Badulla railway line.
 
-Built during British colonial rule, the bridge is constructed entirely of brick, stone, and cement without any steel. Legend has it that the bridge was built without using a single piece of steel due to a shortage during World War I. The architect was a local Sri Lankan named P.K. Appuhami.
-
-The surrounding area offers breathtaking views of the hill country, lush tea plantations, and misty mountains. Visitors often time their visits with the train schedule to capture stunning photographs of the train crossing the bridge.`
+Built during British colonial rule, the bridge is constructed entirely of brick, stone, and cement without any steel. The surrounding area offers breathtaking views of the hill country, lush tea plantations, and misty mountains.`
     },
-    '3': {
-      highlights: ['Whale and dolphin watching', 'Surfing and swimming', 'Beachside dining', 'Stunning sunsets'],
-      bestTime: 'November - April',
-      duration: '1-3 days',
+    'little-adams-peak': {
+      highlights: ['Easy hiking trail', 'Panoramic mountain views', 'Tea plantation scenery', 'Sunrise and sunset views'],
+      bestTime: 'Year-round',
+      duration: '2-3 hours',
       groupSize: 'Any size',
-      fullDescription: `Mirissa is a small town on the south coast of Sri Lanka, located in the Matara District of the Southern Province. It is approximately 150 kilometers south of Colombo and is situated at an elevation of 4 meters above sea level.
+      fullDescription: `Little Adam's Peak is a popular hiking destination near Ella. The trail offers stunning views of the surrounding mountains, valleys, and tea plantations. Despite its name, the hike is relatively easy and suitable for most fitness levels.
 
-The beach and nightlife of Mirissa make it a popular tourist destination. It is known for its significant whale and dolphin watching opportunities, with the season running from November to April. Blue whales, the largest animals on Earth, are frequently spotted here.
-
-The crescent-shaped beach is perfect for swimming and surfing, with waves suitable for both beginners and experienced surfers. The town has developed a vibrant food scene with numerous beachside restaurants serving fresh seafood and international cuisine.`
+The peak gets its name from its resemblance to the famous Adam's Peak, though it's much smaller and easier to climb. The trail winds through tea estates before reaching the summit, where you're rewarded with 360-degree panoramic views.`
     },
-    '4': {
+    'ella-train': {
+      highlights: ['Scenic mountain railway', 'Tea plantation views', 'Historic bridge crossings', 'Cultural experience'],
+      bestTime: 'Year-round',
+      duration: 'Half day',
+      groupSize: 'Any size',
+      fullDescription: `The Ella Train Journey is considered one of the most scenic train rides in the world. The route passes through stunning hill country landscapes, crossing viaducts and passing through tunnels, with views of tea plantations, waterfalls, and mountains.
+
+The journey offers an authentic Sri Lankan experience, with locals and tourists sharing the carriages. The train crosses several iconic bridges including the famous Nine Arch Bridge, offering spectacular photo opportunities.`
+    },
+    'nanuoya-train': {
+      highlights: ['Scenic highland journey', 'Tea country views', 'Mountain tunnel passages', 'Highland station experience'],
+      bestTime: 'Year-round',
+      duration: 'Half day',
+      groupSize: 'Any size',
+      fullDescription: `The Nanuoya Train Journey takes you through some of Sri Lanka's most beautiful highland scenery. Nanuoya is the nearest station to Nuwara Eliya and offers stunning views of the hill country.
+
+The train passes through lush green tea plantations, misty mountains, and scenic valleys. It's a perfect way to experience the beauty of Sri Lanka's central highlands while enjoying an authentic local transport experience.`
+    },
+    'horton-plains': {
+      highlights: ['World\'s End viewpoint', 'Baker\'s Falls', 'Cloud forest hiking', 'Endemic wildlife'],
+      bestTime: 'January - March',
+      duration: 'Half day',
+      groupSize: '2-15 people',
+      fullDescription: `Horton Plains National Park is a protected area in the central highlands of Sri Lanka and is covered by montane grassland and cloud forest. The park is home to many endemic species of plants and animals.
+
+The main attractions include World's End, a stunning escarpment with a 880m drop, and Baker's Falls, a beautiful waterfall. The park is best visited early in the morning before the mist rolls in to obscure the views at World's End.`
+    },
+    'tea-factory': {
+      highlights: ['Learn tea production process', 'Tea tasting session', 'Plantation views', 'Buy fresh Ceylon tea'],
+      bestTime: 'Year-round',
+      duration: '1-2 hours',
+      groupSize: 'Any size',
+      fullDescription: `Visit a traditional Tea Factory to learn about the production of world-famous Ceylon tea. You'll see the entire process from the freshly plucked leaves to the finished product.
+
+The tour includes a walk through the tea plantations, a detailed explanation of the processing stages, and ends with a tea tasting session where you can sample different grades of tea. You can also purchase fresh tea directly from the factory.`
+    },
+    'gregory-lake': {
+      highlights: ['Boating activities', 'Scenic walks', 'Picnic areas', 'Horse riding'],
+      bestTime: 'Year-round',
+      duration: '2-3 hours',
+      groupSize: 'Any size',
+      fullDescription: `Gregory Lake is a beautiful lake in the heart of Nuwara Eliya, surrounded by manicured gardens and offering stunning views of the surrounding hills. The lake was named after Sir William Gregory, a British Governor of Ceylon.
+
+Visitors can enjoy various activities including paddle boating, jet skiing, and pony rides around the lake. The lakeside promenade is perfect for a leisurely walk, and there are several cafes and restaurants nearby.`
+    },
+    'nuwara-eliya-post-office': {
+      highlights: ['Historic colonial building', 'Unique architecture', 'Send postcards home', 'Photo opportunity'],
+      bestTime: 'Year-round',
+      duration: '30 minutes',
+      groupSize: 'Any size',
+      fullDescription: `The Nuwara Eliya Post Office is a charming colonial-era building that serves as a popular tourist attraction. Built during British rule, the red-brick building features distinctive Tudor-style architecture.
+
+Visitors can send postcards and letters home with a unique Nuwara Eliya postmark. The building's distinctive red color and architectural style make it a perfect photo opportunity and a reminder of Sri Lanka's colonial heritage.`
+    },
+    'ambuluwawa': {
+      highlights: ['360-degree panoramic views', 'Multi-religious tower', 'Biodiversity park', 'Adventure climbing'],
+      bestTime: 'Year-round',
+      duration: '2-3 hours',
+      groupSize: 'Any size',
+      fullDescription: `Ambuluwawa Tower is a multi-religious site located on Ambuluwawa mountain in Gampola. The tower offers breathtaking 360-degree views of the surrounding mountains, valleys, and forests.
+
+The site is unique as it contains a Buddhist stupa, Hindu kovil, Islamic mosque, and Christian church in close proximity. The spiral staircase leading to the top of the tower offers an adventurous climb with increasingly stunning views as you ascend.`
+    },
+    'temple-of-tooth': {
       highlights: ['See the sacred tooth relic', 'Experience Buddhist ceremonies', 'Explore the museum', 'Attend the Esala Perahera festival'],
       bestTime: 'Year-round (July-August for Esala Perahera)',
       duration: '2-3 hours',
       groupSize: 'Any size',
       fullDescription: `Sri Dalada Maligawa, or the Temple of the Sacred Tooth Relic, is a Buddhist temple in Kandy, Sri Lanka. It is located in the royal palace complex of the former Kingdom of Kandy, which houses the relic of the tooth of the Buddha.
 
-Since ancient times, the relic has played an important role in local politics because it is believed that whoever holds the relic holds the governance of the country. The temple complex was severely damaged by a bomb attack by LTTE in 1998 but was fully restored.
-
 The temple is the most sacred Buddhist shrine in Sri Lanka and attracts thousands of local and foreign pilgrims every year. The annual Esala Perahera, one of the oldest and grandest of all Buddhist festivals in Sri Lanka, is held in honor of the sacred tooth relic.`
     },
-    '5': {
-      highlights: ['Leopard safari', 'Elephant herds', 'Bird watching', 'Coastal scenery'],
-      bestTime: 'February - July',
-      duration: 'Full day',
-      groupSize: '2-6 people per jeep',
-      fullDescription: `Yala National Park is the most visited and second largest national park in Sri Lanka, bordering the Indian Ocean. The park covers 979 square kilometers and is located in the southeast region of the country.
-
-Yala is home to 44 varieties of mammal and 215 bird species. It has one of the highest leopard densities in the world, making it one of the best places on Earth to spot these elusive big cats. The park is also home to elephants, sloth bears, crocodiles, and many other wildlife species.
-
-The landscape of Yala is diverse, featuring scrub jungle, grasslands, tanks, and beaches. The park was designated as a wildlife sanctuary in 1900 and was upgraded to national park status in 1938.`
-    },
-    '6': {
-      highlights: ['Walk the historic ramparts', 'Visit the lighthouse', 'Explore colonial architecture', 'Shop for local crafts'],
+    'view-point': {
+      highlights: ['Panoramic city views', 'Kandy Lake vista', 'Mountain backdrop', 'Photo opportunities'],
       bestTime: 'Year-round',
-      duration: 'Half to full day',
+      duration: '30 minutes - 1 hour',
       groupSize: 'Any size',
-      fullDescription: `Galle Fort, in the Bay of Galle on the southwest coast of Sri Lanka, was first built in 1588 by the Portuguese, then extensively fortified by the Dutch during the 17th century from 1649 onwards. It is a historical, archaeological, and architectural heritage monument, which stands for 432 years.
+      fullDescription: `The Kandy View Point offers stunning panoramic views of Kandy city, the sacred Kandy Lake, and the surrounding mountains. Located on a hill above the city, it provides the perfect vantage point to appreciate the beauty of Sri Lanka's cultural capital.
 
-The fort has a colorful history, and today is a UNESCO World Heritage Site. It is the largest remaining fortress in Asia built by European occupiers. The fort has a unique atmosphere, with its mixture of Dutch colonial buildings, ancient mosques and churches, grand mansions, and museums.
+The viewpoint is especially beautiful during sunrise and sunset when the city is bathed in golden light. It's a perfect spot for photography and to get a sense of the layout of this historic city.`
+    },
+    'gem-museum': {
+      highlights: ['Learn about Sri Lankan gems', 'See precious stones', 'Mining process explanation', 'Shopping opportunity'],
+      bestTime: 'Year-round',
+      duration: '1-2 hours',
+      groupSize: 'Any size',
+      fullDescription: `Visit a Gem Museum to learn about Sri Lanka's famous gem industry. Sri Lanka, known historically as "Ratna Dweepa" (Island of Gems), has been a source of precious stones for thousands of years.
 
-Today, Galle Fort is a living community with homes, businesses, restaurants, and boutique hotels operating within its ancient walls. It is a popular destination for tourists seeking to experience Sri Lanka's colonial history while enjoying modern amenities.`
+The museum showcases various types of gems found in Sri Lanka including blue sapphires, rubies, cat's eyes, and many others. You'll learn about the mining process, cutting techniques, and the history of gem trading in Sri Lanka.`
+    },
+    'kandyan-dance': {
+      highlights: ['Traditional dance performance', 'Fire walking ceremony', 'Drum performances', 'Cultural experience'],
+      bestTime: 'Year-round',
+      duration: '1-2 hours',
+      groupSize: 'Any size',
+      fullDescription: `Experience the vibrant tradition of Kandyan Dance, a classical dance form that originated in the Kingdom of Kandy. The dance is characterized by elaborate costumes, rhythmic drumming, and energetic movements.
+
+The show typically includes various traditional dances, fire-eating and fire-walking performances, and demonstrations of traditional drumming. It's a wonderful way to experience Sri Lankan culture and heritage.`
     }
   };
 
@@ -101,7 +170,7 @@ Today, Galle Fort is a living community with homes, businesses, restaurants, and
   return (
     <div className="min-h-screen bg-lanka-sand">
       {/* Hero Section */}
-      <div className="relative h-[60vh] w-full">
+      <div className="relative h-[45vh] sm:h-[50vh] md:h-[60vh] w-full">
         <img
           src={destination.imageUrl}
           alt={destination.title}
@@ -112,84 +181,106 @@ Today, Galle Fort is a living community with homes, businesses, restaurants, and
         {/* Back Button */}
         <Link 
           to="/" 
-          className="absolute top-6 left-6 flex items-center gap-2 text-white bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/30 transition-colors"
+          className="absolute top-4 left-4 md:top-6 md:left-6 flex items-center gap-1.5 md:gap-2 text-white bg-white/20 backdrop-blur-sm px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white/30 transition-colors text-sm md:text-base"
         >
-          <ArrowLeft size={20} />
-          Back to Home
+          <FaArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
+          Back
         </Link>
 
         {/* Title Overlay */}
-        <div className="absolute bottom-0 left-0 w-full p-8 md:p-12">
-          <span className="inline-block px-4 py-2 bg-lanka-gold text-lanka-green text-sm font-bold uppercase tracking-wider rounded-full mb-4">
-            {destination.category}
-          </span>
-          <h1 className="font-serif text-4xl md:text-6xl font-bold text-white mb-4">{destination.title}</h1>
-          <div className="flex items-center text-white/90 text-lg">
-            <MapPin size={20} className="mr-2" />
+        <div className="absolute bottom-0 left-0 w-full p-4 sm:p-6 md:p-12">
+          <div className="flex flex-wrap gap-2 md:gap-3 mb-2 md:mb-4">
+            <span className="inline-block px-2.5 py-1 md:px-4 md:py-2 bg-lanka-gold text-lanka-green text-xs md:text-sm font-bold uppercase tracking-wider rounded-full">
+              {destination.category}
+            </span>
+            {tourPackageName && (
+              <span className="inline-flex items-center gap-1.5 md:gap-2 px-2.5 py-1 md:px-4 md:py-2 bg-lanka-green text-white text-xs md:text-sm font-bold rounded-full">
+                <FaBoxOpen className="w-3 h-3 md:w-4 md:h-4" />
+                <span className="hidden sm:inline">{tourPackageName}</span>
+                <span className="sm:hidden">Tour</span>
+              </span>
+            )}
+          </div>
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-2 md:mb-4">{destination.title}</h1>
+          <div className="flex items-center text-white/90 text-sm md:text-lg">
+            <FaMapMarkerAlt className="w-3.5 h-3.5 md:w-5 md:h-5 mr-1.5 md:mr-2" />
             {destination.location}
           </div>
         </div>
       </div>
 
       {/* Content Section */}
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
           {/* Main Content */}
-          <div className="lg:col-span-2">
-            <h2 className="font-serif text-3xl font-bold text-slate-900 mb-6">About This Destination</h2>
-            <div className="prose prose-lg text-slate-700 leading-relaxed whitespace-pre-line">
+          <div className="lg:col-span-2 order-2 lg:order-1">
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 mb-4 md:mb-6">About This Destination</h2>
+            <div className="prose prose-sm md:prose-lg text-slate-700 leading-relaxed whitespace-pre-line">
               {content.fullDescription}
             </div>
 
-            <h3 className="font-serif text-2xl font-bold text-slate-900 mt-12 mb-6">Highlights</h3>
-            <ul className="space-y-3">
+            <h3 className="font-serif text-lg sm:text-xl md:text-2xl font-bold text-slate-900 mt-8 md:mt-12 mb-4 md:mb-6">Highlights</h3>
+            <ul className="space-y-2 md:space-y-3">
               {content.highlights.map((highlight, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <span className="w-2 h-2 bg-lanka-gold rounded-full mt-2"></span>
-                  <span className="text-slate-700">{highlight}</span>
+                <li key={index} className="flex items-start gap-2 md:gap-3">
+                  <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-lanka-gold rounded-full mt-2"></span>
+                  <span className="text-slate-700 text-sm md:text-base">{highlight}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-6">
-              <h3 className="font-serif text-xl font-bold text-slate-900 mb-6">Quick Info</h3>
+          <div className="lg:col-span-1 order-1 lg:order-2">
+            <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 lg:sticky lg:top-6">
+              <h3 className="font-serif text-lg md:text-xl font-bold text-slate-900 mb-4 md:mb-6">Quick Info</h3>
               
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-lanka-green/10 rounded-full flex items-center justify-center">
-                    <Calendar size={24} className="text-lanka-green" />
+              <div className="space-y-3 md:space-y-4">
+                <div className="flex items-center gap-3 md:gap-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-lanka-green/10 rounded-full flex items-center justify-center">
+                    <FaCalendarAlt className="w-4 h-4 md:w-6 md:h-6 text-lanka-green" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Best Time to Visit</p>
-                    <p className="font-semibold text-slate-900">{content.bestTime}</p>
+                    <p className="text-xs md:text-sm text-slate-500">Best Time to Visit</p>
+                    <p className="font-semibold text-slate-900 text-sm md:text-base">{content.bestTime}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-lanka-green/10 rounded-full flex items-center justify-center">
-                    <Clock size={24} className="text-lanka-green" />
+                <div className="flex items-center gap-3 md:gap-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-lanka-green/10 rounded-full flex items-center justify-center">
+                    <FaClock className="w-4 h-4 md:w-6 md:h-6 text-lanka-green" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Recommended Duration</p>
-                    <p className="font-semibold text-slate-900">{content.duration}</p>
+                    <p className="text-xs md:text-sm text-slate-500">Recommended Duration</p>
+                    <p className="font-semibold text-slate-900 text-sm md:text-base">{content.duration}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-lanka-green/10 rounded-full flex items-center justify-center">
-                    <Users size={24} className="text-lanka-green" />
+                <div className="flex items-center gap-3 md:gap-4">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-lanka-green/10 rounded-full flex items-center justify-center">
+                    <FaUsers className="w-4 h-4 md:w-6 md:h-6 text-lanka-green" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500">Group Size</p>
-                    <p className="font-semibold text-slate-900">{content.groupSize}</p>
+                    <p className="text-xs md:text-sm text-slate-500">Group Size</p>
+                    <p className="font-semibold text-slate-900 text-sm md:text-base">{content.groupSize}</p>
                   </div>
                 </div>
               </div>
 
-              <button className="w-full mt-8 px-6 py-4 bg-lanka-gold text-lanka-green font-bold uppercase tracking-wide rounded-full hover:bg-lanka-green hover:text-white transition-colors">
+              {tourPackageName && (
+                <div className="mt-4 md:mt-6 p-3 md:p-4 bg-lanka-green/5 rounded-lg md:rounded-xl border border-lanka-green/20">
+                  <div className="flex items-center gap-2 text-lanka-green mb-1 md:mb-2">
+                    <FaBoxOpen className="w-4 h-4 md:w-5 md:h-5" />
+                    <span className="font-bold text-xs md:text-sm">Part of Tour Package</span>
+                  </div>
+                  <p className="text-slate-700 font-semibold text-sm md:text-base">{tourPackageName}</p>
+                </div>
+              )}
+
+              <button 
+                onClick={handleBookTour}
+                className="w-full mt-6 md:mt-8 px-4 md:px-6 py-3 md:py-4 bg-lanka-gold text-lanka-green font-bold uppercase tracking-wide rounded-full hover:bg-lanka-green hover:text-white transition-colors text-sm md:text-base"
+              >
                 Book This Tour
               </button>
             </div>

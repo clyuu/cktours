@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, Send, X, Loader2, Sparkles } from 'lucide-react';
+import { FaCommentDots, FaPaperPlane, FaTimes, FaSpinner, FaMagic } from 'react-icons/fa';
 import { getTravelAdvice } from '../services/geminiService';
 import { ChatMessage, ChatSender } from '../types';
 import ReactMarkdown from 'react-markdown';
@@ -65,20 +65,20 @@ const TravelAssistant: React.FC = () => {
       {/* Floating Toggle Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-40 p-4 bg-lanka-gold text-lanka-green rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 flex items-center gap-2 font-bold ${isOpen ? 'hidden' : 'flex'}`}
+        className={`fixed bottom-5 right-4 md:bottom-6 md:right-6 z-40 p-3.5 md:p-4 bg-lanka-gold text-lanka-green rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 flex items-center gap-2 font-bold ${isOpen ? 'hidden' : 'flex'}`}
       >
-        <Sparkles size={20} />
+        <FaMagic className="w-5 h-5" />
         <span className="hidden md:inline">Ask AI Guide</span>
       </button>
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[90vw] md:w-[400px] h-[600px] max-h-[80vh] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 animate-fade-in-up">
+        <div className="fixed bottom-4 left-1/2 z-50 h-[78vh] max-h-[650px] w-[94vw] max-w-[420px] -translate-x-1/2 md:bottom-6 md:left-auto md:right-6 md:translate-x-0 md:w-[400px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 animate-fade-in-up">
           {/* Header */}
           <div className="bg-lanka-green text-white p-4 flex justify-between items-center">
             <div className="flex items-center gap-2">
               <div className="bg-white/20 p-2 rounded-full">
-                <Sparkles size={18} className="text-lanka-gold" />
+                <FaMagic className="w-4 h-4 text-lanka-gold" />
               </div>
               <div>
                 <h3 className="font-bold text-sm">Sri Lanka AI Guide</h3>
@@ -89,7 +89,7 @@ const TravelAssistant: React.FC = () => {
               onClick={() => setIsOpen(false)}
               className="text-white/70 hover:text-white transition-colors"
             >
-              <X size={20} />
+              <FaTimes className="w-5 h-5" />
             </button>
           </div>
 
@@ -108,9 +108,9 @@ const TravelAssistant: React.FC = () => {
                   }`}
                 >
                   {msg.sender === ChatSender.AI ? (
-                    <ReactMarkdown className="prose prose-sm max-w-none prose-p:my-1 prose-a:text-lanka-teal">
-                      {msg.text}
-                    </ReactMarkdown>
+                    <div className="prose prose-sm max-w-none prose-p:my-1 prose-a:text-lanka-teal">
+                      <ReactMarkdown>{msg.text}</ReactMarkdown>
+                    </div>
                   ) : (
                     msg.text
                   )}
@@ -120,7 +120,7 @@ const TravelAssistant: React.FC = () => {
             {isLoading && (
               <div className="flex justify-start">
                 <div className="bg-white border border-slate-100 rounded-2xl rounded-bl-none px-4 py-3 shadow-sm flex items-center gap-2 text-slate-500 text-sm">
-                  <Loader2 size={16} className="animate-spin" />
+                  <FaSpinner className="w-4 h-4 animate-spin" />
                   Thinking...
                 </div>
               </div>
@@ -144,7 +144,7 @@ const TravelAssistant: React.FC = () => {
                 disabled={isLoading || !input.trim()}
                 className="p-2 bg-lanka-green text-white rounded-full hover:bg-lanka-teal disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                <Send size={18} />
+                <FaPaperPlane className="w-4 h-4" />
               </button>
             </div>
           </div>
