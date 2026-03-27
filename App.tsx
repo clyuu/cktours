@@ -66,7 +66,7 @@ function HomePage() {
       <Experiences />
 
       {/* Video/Banner Section - Essence of Serendipity */}
-      <section className="relative h-[52vh] sm:h-[58vh] md:h-[60vh] flex items-center justify-center bg-scroll md:bg-fixed bg-center bg-cover" style={{ backgroundImage: 'url(/Images/The%20Essence%20of%20Serendipity.jpg)' }}>
+      <section className="relative h-[52vh] sm:h-[58vh] md:h-[60vh] flex items-center justify-center bg-scroll bg-center bg-cover" style={{ backgroundImage: 'url(/Images/The%20Essence%20of%20Serendipity.jpg)' }}>
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 text-center text-white px-4 md:px-6">
           <h2 className="font-serif text-2xl sm:text-3xl md:text-6xl font-bold mb-4 md:mb-6">The Essence of Serendipity</h2>
@@ -92,6 +92,8 @@ function HomePage() {
                 <img 
                   src="/Images/Sri Lankan Street Food.JPG" 
                   alt="Sri Lankan Rice and Curry" 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               </div>
@@ -113,6 +115,8 @@ function HomePage() {
                 <img 
                   src="/Images/The Esala Perahera Festival.jpg" 
                   alt="Sri Lankan Culture and Festivals" 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               </div>

@@ -576,6 +576,8 @@ const Tours: React.FC = () => {
                 <img 
                   src={pkg.image}
                   alt={pkg.name}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-3 right-3 md:top-4 md:right-4 bg-white/90 px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-bold text-lanka-green">

@@ -13,13 +13,28 @@ const Navbar: React.FC = () => {
   const isLightMode = !useTransparentStart || isScrolled;
 
   useEffect(() => {
+    let rafId = 0;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      if (rafId) {
+        return;
+      }
+
+      rafId = window.requestAnimationFrame(() => {
+        const nextScrolled = window.scrollY > 40;
+        setIsScrolled((prev) => (prev === nextScrolled ? prev : nextScrolled));
+        rafId = 0;
+      });
     };
 
     handleScroll();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
   }, [location.pathname]);
 
   const navLinks = [

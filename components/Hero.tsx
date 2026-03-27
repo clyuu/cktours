@@ -9,6 +9,9 @@ const Hero: React.FC = () => {
         <img
           src="/Images/hero.jpg" 
           alt="C&K Tours - Sri Lanka"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"></div>

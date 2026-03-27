@@ -16,6 +16,8 @@ const DestinationCard: React.FC<DestinationCardProps> = ({ destination }) => {
       <img
         src={destination.imageUrl}
         alt={destination.title}
+        loading="lazy"
+        decoding="async"
         referrerPolicy="no-referrer"
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
       />

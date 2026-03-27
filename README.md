@@ -2,20 +2,18 @@
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Run and deploy your AI Studio app
+# C&K Tours Website
 
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/drive/1bI9dt16QKN6NEzRbjwGQo0dfi5YIBQNj
+This repository contains the frontend site and optional review API service.
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
+**Prerequisites:** Node.js
 
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+2. (Optional) Set `GEMINI_API_KEY` in [.env.local](.env.local) for the AI travel assistant feature
 3. Run app + SQLite review API together:
    `npm run dev:all`
 
