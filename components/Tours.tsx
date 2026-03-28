@@ -527,21 +527,25 @@ const Tours: React.FC = () => {
   const [reviewsByTour, setReviewsByTour] = useState<Record<string, ReviewPreview[]>>({});
 
   useEffect(() => {
-    try {
-      const reviews = getStoredReviews() as ReviewPreview[];
-      const grouped = reviews.reduce<Record<string, ReviewPreview[]>>((accumulator, review) => {
-        if (!accumulator[review.tourId]) {
-          accumulator[review.tourId] = [];
-        }
+    const loadReviews = async () => {
+      try {
+        const reviews = (await getStoredReviews()) as ReviewPreview[];
+        const grouped = reviews.reduce<Record<string, ReviewPreview[]>>((accumulator, review) => {
+          if (!accumulator[review.tourId]) {
+            accumulator[review.tourId] = [];
+          }
 
-        accumulator[review.tourId].push(review);
-        return accumulator;
-      }, {});
+          accumulator[review.tourId].push(review);
+          return accumulator;
+        }, {});
 
-      setReviewsByTour(grouped);
-    } catch (error) {
-      console.error('Failed to load review previews:', error);
-    }
+        setReviewsByTour(grouped);
+      } catch (error) {
+        console.error('Failed to load review previews:', error);
+      }
+    };
+
+    loadReviews();
   }, []);
 
   return (

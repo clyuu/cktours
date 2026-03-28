@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { addStoredReview, getStoredReviews } from '../services/reviewStore';
+import { addStoredReview, getStoredReviews, isSharedReviewModeEnabled } from '../services/reviewStore';
 
 interface Review {
   id: number;
@@ -19,6 +19,8 @@ const TOUR_PLAN_OPTIONS = [
   { id: 'custom-full-tour', name: 'Full Custom Tour (1-14 Places)' },
 ];
 
+const REVIEW_COOLDOWN_MS = 10_000;
+
 const Reviews: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,6 +28,7 @@ const Reviews: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [sharedModeEnabled] = useState(isSharedReviewModeEnabled());
 
   const [tourId, setTourId] = useState(TOUR_PLAN_OPTIONS[0].id);
   const [customerName, setCustomerName] = useState('');
@@ -77,7 +80,7 @@ const Reviews: React.FC = () => {
     setError(null);
 
     try {
-      const data = getStoredReviews() as Review[];
+      const data = (await getStoredReviews()) as Review[];
       setReviews(data);
     } catch (loadError) {
       console.error(loadError);
@@ -111,6 +114,9 @@ const Reviews: React.FC = () => {
 
     const cleanName = customerName.trim();
     const cleanComment = comment.trim();
+    const now = Date.now();
+    const lastSubmitAtRaw = typeof window !== 'undefined' ? window.localStorage.getItem('cktours_last_review_submit') : null;
+    const lastSubmitAt = lastSubmitAtRaw ? Number(lastSubmitAtRaw) : 0;
 
     if (!tourId || !cleanName || !cleanComment) {
       setSuccessMessage(null);
@@ -130,12 +136,25 @@ const Reviews: React.FC = () => {
       return;
     }
 
+    if (cleanComment.length > 600) {
+      setSuccessMessage(null);
+      setError('Please keep your review under 600 characters.');
+      return;
+    }
+
+    if (lastSubmitAt > 0 && now - lastSubmitAt < REVIEW_COOLDOWN_MS) {
+      const secondsLeft = Math.ceil((REVIEW_COOLDOWN_MS - (now - lastSubmitAt)) / 1000);
+      setSuccessMessage(null);
+      setError(`Please wait ${secondsLeft}s before submitting another review.`);
+      return;
+    }
+
     setSubmitting(true);
     setError(null);
     setSuccessMessage(null);
 
     try {
-      const newReview = addStoredReview({
+      const newReview = await addStoredReview({
         tourId,
         tourName: selectedTourName,
         customerName: cleanName,
@@ -143,6 +162,11 @@ const Reviews: React.FC = () => {
         comment: cleanComment,
         visitedAt: visitedAt || null,
       });
+
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('cktours_last_review_submit', String(Date.now()));
+      }
+
       setReviews((current) => [newReview, ...current]);
 
       setCustomerName('');
@@ -150,7 +174,11 @@ const Reviews: React.FC = () => {
       setHoverRating(0);
       setComment('');
       setVisitedAt('');
-      setSuccessMessage('Review saved successfully. Thank you for your feedback!');
+      setSuccessMessage(
+        sharedModeEnabled
+          ? 'Review saved successfully and shared with all visitors.'
+          : 'Review saved successfully on this device. Thank you for your feedback!'
+      );
     } catch (submitError) {
       console.error(submitError);
       const message = submitError instanceof Error ? submitError.message : 'Unable to submit your review.';
@@ -239,6 +267,7 @@ const Reviews: React.FC = () => {
                 placeholder="Enter your name"
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-lanka-green focus:bg-white"
                 minLength={2}
+                maxLength={60}
                 required
               />
             </div>
@@ -291,8 +320,10 @@ const Reviews: React.FC = () => {
                 rows={4}
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-lanka-green focus:bg-white"
                 minLength={5}
+                maxLength={600}
                 required
               />
+              <p className="mt-1 text-xs text-slate-500">{comment.trim().length}/600 characters</p>
             </div>
 
             <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-3">

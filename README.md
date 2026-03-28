@@ -25,7 +25,26 @@ If you only run `npm run dev`, reviews will not load because the API server is n
 
 ## Make Reviews Work On GitHub Pages
 
-GitHub Pages can host the frontend only. To keep review save/load working in production, host the API separately and point the frontend to that API.
+For small traffic projects, you can use JSONBin to share reviews across all visitors without running a backend server.
+
+### 1. Configure JSONBin
+
+Create a `.env.local` file and add:
+
+- `VITE_JSONBIN_BIN_ID=<your_bin_id>`
+- `VITE_JSONBIN_API_KEY=<your_jsonbin_key>`
+- `VITE_JSONBIN_ACCESS_KEY=<optional_access_key>`
+
+If JSONBin values are not set (or JSONBin is temporarily unavailable), the app automatically falls back to local device storage so users can still submit reviews.
+
+### 2. Build and Deploy
+
+- `npm run build`
+- `npm run deploy`
+
+## Optional Backend Mode (Express + SQLite)
+
+If you prefer full backend control, keep using the existing Express + SQLite API deployment flow.
 
 ### 1. Deploy Backend API (Express + SQLite)
 
