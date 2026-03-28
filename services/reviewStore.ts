@@ -37,7 +37,19 @@ const getEnvValue = (key: string): string => {
   }
 
   const value = import.meta.env[key as keyof ImportMetaEnv];
-  return typeof value === 'string' ? value.trim() : '';
+  if (typeof value !== 'string') {
+    return '';
+  }
+
+  const trimmed = value.trim();
+  if (
+    (trimmed.startsWith("'") && trimmed.endsWith("'")) ||
+    (trimmed.startsWith('"') && trimmed.endsWith('"'))
+  ) {
+    return trimmed.slice(1, -1).trim();
+  }
+
+  return trimmed;
 };
 
 const getJsonBinConfig = () => {
@@ -56,11 +68,9 @@ const getJsonBinConfig = () => {
 const getJsonBinHeaders = (withContentType = false): Record<string, string> => {
   const config = getJsonBinConfig();
   const headers: Record<string, string> = {};
-  const primaryKey = config.apiKey || config.accessKey;
 
-  if (primaryKey) {
-    headers['X-Master-Key'] = primaryKey;
-    headers['X-Access-Key'] = primaryKey;
+  if (config.apiKey) {
+    headers['X-Master-Key'] = config.apiKey;
   }
 
   if (config.accessKey) {
