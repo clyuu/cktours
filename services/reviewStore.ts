@@ -177,7 +177,7 @@ const saveRemoteReviews = async (reviews: StoredReview[]): Promise<void> => {
     fetch(endpoint, {
       method: 'PUT',
       headers: getJsonBinHeaders(true),
-      body: JSON.stringify(reviews),
+      body: JSON.stringify({ reviews }),
     }),
     REMOTE_REQUEST_TIMEOUT_MS
   );
@@ -185,6 +185,10 @@ const saveRemoteReviews = async (reviews: StoredReview[]): Promise<void> => {
   if (!response.ok) {
     if (response.status === 401) {
       throw new Error('Failed to save shared review (401). Please verify your JSONBin API/Access key.');
+    }
+
+    if (response.status === 400) {
+      throw new Error('Failed to save shared review (400). JSONBin rejected the payload format.');
     }
 
     throw new Error(`Failed to save shared review (${response.status})`);
