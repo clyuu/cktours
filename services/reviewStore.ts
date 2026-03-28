@@ -56,9 +56,11 @@ const getJsonBinConfig = () => {
 const getJsonBinHeaders = (withContentType = false): Record<string, string> => {
   const config = getJsonBinConfig();
   const headers: Record<string, string> = {};
+  const primaryKey = config.apiKey || config.accessKey;
 
-  if (config.apiKey) {
-    headers['X-Master-Key'] = config.apiKey;
+  if (primaryKey) {
+    headers['X-Master-Key'] = primaryKey;
+    headers['X-Access-Key'] = primaryKey;
   }
 
   if (config.accessKey) {
@@ -171,6 +173,10 @@ const saveRemoteReviews = async (reviews: StoredReview[]): Promise<void> => {
   );
 
   if (!response.ok) {
+    if (response.status === 401) {
+      throw new Error('Failed to save shared review (401). Please verify your JSONBin API/Access key.');
+    }
+
     throw new Error(`Failed to save shared review (${response.status})`);
   }
 };
