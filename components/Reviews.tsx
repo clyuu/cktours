@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { addStoredReview, getStoredReviews, isSharedReviewModeEnabled } from '../services/reviewStore';
+import { addStoredReview, getStoredReviews, isSharedReviewModeEnabled, refreshStoredReviews } from '../services/reviewStore';
 
 interface Review {
   id: number;
@@ -80,8 +80,14 @@ const Reviews: React.FC = () => {
     setError(null);
 
     try {
-      const data = (await getStoredReviews()) as Review[];
-      setReviews(data);
+      const localData = (await getStoredReviews()) as Review[];
+      setReviews(localData);
+      setLoading(false);
+
+      const syncedData = (await refreshStoredReviews()) as Review[] | null;
+      if (syncedData) {
+        setReviews(syncedData);
+      }
     } catch (loadError) {
       console.error(loadError);
       setError('Unable to load reviews right now. Please refresh and try again.');

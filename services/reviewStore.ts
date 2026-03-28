@@ -21,10 +21,13 @@ interface NewStoredReview {
 const STORAGE_KEY = 'cktours_reviews_v1';
 const JSONBIN_BASE_URL = 'https://api.jsonbin.io/v3/b';
 const REMOTE_REQUEST_TIMEOUT_MS = 7000;
+const REMOTE_SYNC_INTERVAL_MS = 30_000;
 
 const seedReviews: StoredReview[] = [];
 
 let memoryReviews: StoredReview[] = [...seedReviews];
+let lastRemoteSyncAt = 0;
+let remoteSyncInFlight: Promise<StoredReview[] | null> | null = null;
 
 const sortByNewest = (items: StoredReview[]) =>
   [...items].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -224,20 +227,48 @@ const saveToLocalStorage = () => {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(memoryReviews));
 };
 
-export const getStoredReviews = async (): Promise<StoredReview[]> => {
-  syncFromLocalStorage();
+const shouldSyncRemote = () => Date.now() - lastRemoteSyncAt > REMOTE_SYNC_INTERVAL_MS;
 
-  try {
-    const remoteReviews = await fetchRemoteReviews();
-    if (remoteReviews) {
-      memoryReviews = sortByNewest(remoteReviews);
-      saveToLocalStorage();
-    }
-  } catch (error) {
-    console.warn('Using local reviews because shared source is unavailable.', error);
+export const refreshStoredReviews = async (force = false): Promise<StoredReview[] | null> => {
+  const config = getJsonBinConfig();
+  if (!config.enabled) {
+    return null;
   }
 
-  return sortByNewest(memoryReviews);
+  if (!force && remoteSyncInFlight) {
+    return remoteSyncInFlight;
+  }
+
+  remoteSyncInFlight = (async () => {
+    try {
+      const remoteReviews = await fetchRemoteReviews();
+      if (remoteReviews) {
+        memoryReviews = sortByNewest(remoteReviews);
+        saveToLocalStorage();
+        lastRemoteSyncAt = Date.now();
+        return sortByNewest(memoryReviews);
+      }
+
+      return null;
+    } finally {
+      remoteSyncInFlight = null;
+    }
+  })();
+
+  return remoteSyncInFlight;
+};
+
+export const getStoredReviews = async (): Promise<StoredReview[]> => {
+  syncFromLocalStorage();
+  const localReviews = sortByNewest(memoryReviews);
+
+  if (getJsonBinConfig().enabled && shouldSyncRemote()) {
+    refreshStoredReviews().catch((error) => {
+      console.warn('Using local reviews because shared source is unavailable.', error);
+    });
+  }
+
+  return localReviews;
 };
 
 export const addStoredReview = async (payload: NewStoredReview): Promise<StoredReview> => {
